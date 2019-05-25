@@ -1,0 +1,27 @@
+{{>principal}}
+<html>
+	<head>
+		<title>Contacta con nosotros</title>
+	</head>
+	<body>
+		<form method="post">
+			<p>Nombre</p>
+			<input type='text' placeholder="Nombre" name='nombre'/>
+			<p>Apellido</p>
+			<input type='text' placeholder="Apellido" name='Apellido'/>
+			<p>Telefono</p>
+			<input type='text' placeholder="Telefono" name='Telefono'/>
+			<p>Email</p>
+			<input type='text' placeholder="Correo electronico" name='email'/>
+			<p>Comentario:</p>
+			<p><input type='text' placeholder="Comentario" name="Comentario"/></p>
+		
+			<p><input type='submit' value='Enviar'/></p>
+			<input type="hidden" name="_csrf" value="{{token}}"/>
+		</form>
+		<form action="/">
+			<input type='submit' value='Cancelar'/>
+			<input type="hidden" name="_csrf" value="{{token}}"/>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,19 @@
+{{>header}}
+	
+			<h2>ARTICULOS</h2>
+		<ul class="items">
+			{{#articulo}}
+			<a href="articulos/{{id}}">{{nombre}} {{descripcion}} {{precio}}</a><br>
+			{{/articulo}}
+		</ul>
+		
+	<p>Registro de nuevo cliente: </p>	
+		<form action="/registrar_cliente" method ="post" accept-charset="utf-8">
+		<input type="submit" name="registrarse" value="REGISTRARSE">
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+		</form>
+	<p>CONTACTE CON NOSOTROS </p>
+		
+
+	
+{{>footer}}
