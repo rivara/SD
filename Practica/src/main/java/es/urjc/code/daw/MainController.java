@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 import es.urjc.code.daw.seguridad.ArticuloService;
 
@@ -28,8 +31,6 @@ import es.urjc.code.daw.seguridad.ArticuloService;
 public class MainController {
 	
 	/*INSTANCIA LAS CLASES*/
-	@Autowired
-	private  StockRepository stock;
 	@Autowired
 	private  ArticuloRepository articulo;
 	@Autowired
@@ -40,79 +41,59 @@ public class MainController {
 	private  CompraRepository compra;
 	@Autowired
 	private ArticuloService service;	
-	@Autowired
-	private ClienteComponent userComponent;
-	
-	@ModelAttribute
-	public void addAttributes(Model model) {
-		
-		boolean logged = userComponent.getLoggedUser() != null;
-		
-		model.addAttribute("logged", logged);
-		model.addAttribute("notLogged", !logged);
-		
-		if(logged){
-			model.addAttribute("userName",userComponent.getLoggedUser().getNombre());
-			model.addAttribute("admin", userComponent.getLoggedUser().getRoles().contains("ROLE_ADMIN"));
-		}
-	}
-	
-		
-	@RequestMapping("/")
-	public String articulos(Model model) {
 
-		model.addAttribute("articulos", service.findAll());
+		
+	@GetMapping("/")
+	public String principal() {
 		
 		return "principal";
 	}
-	/*
-	@GetMapping("/")
+	
+	@GetMapping("/loggin")
+	public String logginCliente(){
+		return "loggin_cliente";
+	}
+	
+	
+	@GetMapping("/tienda")
 	public String tienda (Model model,HttpServletRequest request, HttpSession sesion){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		sesion = request.getSession();
-		sesion.setAttribute("email", currentPrincipalName);
-		model.addAttribute("articulo", articulo.findAll());
+		sesion.setAttribute("name", currentPrincipalName);
+		model.addAttribute("articulos", articulo.findAll());
 		model.addAttribute("admin",request.isUserInRole("ADMIN"));
-		return "principal";
-	}*/
-	/*
-		@GetMapping("/login")
-		public String loginCliente(Model model){
-			return "login";
-		}
-		*/
-		@PostMapping("/registrar_cliente")
-		public String RegistrarCliente(Model model){
-			return "nuevoCliente";
-		}
+		return "tienda";
+	}
+	
+	@PostMapping("/registrar_cliente")
+	public String registrarCliente(Model model){
+		return "nuevoCliente";
+	}
+	
+	@PostMapping("/cliente/nuevo")
+	public String ClienteNuevo (Model model, Cliente cliente1, HttpSession sesion){
+
+		//Guardo el cliente creado
+		sesion.setAttribute("name", cliente1.getName());
+		List<String> rol = new ArrayList<String>();
+		rol.add("ROLE_USER");
+		cliente1.setRol(rol);
 		
-		@PostMapping("/cliente/nuevo")
-		public String ClienteNuevo (Model model, Cliente cliente1, HttpSession sesion){
-			
-			//Guardo el usuario creado
-			sesion.setAttribute("email", cliente1.getEmail());
-			List<String> rol = new ArrayList<String>();
-			rol.add("ROLE_USER");
-			cliente1.setRoles(rol);
-			Carrito carrito = new Carrito();
-			cliente1.setCarrito(carrito);
-			String password = cliente1.getPasswordHash();
-			cliente1.setPasswordHash(new BCryptPasswordEncoder().encode(password));
-			cliente.save(cliente1);
-			return "cliente_registrado";
+		//Puente ya que el constructor de la clase no me lo hace
+		Carrito carrito = new Carrito();
+		cliente1.setCarrito(carrito);
+		String password = cliente1.getPasswordHash();
+		//cliente1.setPasswordHash(new BCryptPasswordEncoder().encode(password));
+		cliente1.setPasswordHash(password);
+		cliente.save(cliente1);
+		return "cliente_registrado";
+	}
+		
+		@PostMapping("/nuevo_articulo")
+		public String añadirArticulo(){
+			return "nuevoArticulo";
 		}
-		/*
-		@GetMapping("/tienda")
-		public String tienda (Model model,HttpServletRequest request, HttpSession sesion){
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String currentPrincipalName = authentication.getName();
-			sesion = request.getSession();
-			sesion.setAttribute("email", currentPrincipalName);
-			model.addAttribute("articulo", articulo.findAll());
-			model.addAttribute("admin",request.isUserInRole("ADMIN"));
-			return "tienda";
-		}*/
 		
 		@PostMapping("/articulo/nuevo")
 		public String nuevoArticulo(Model model, Articulo articulo1) {
@@ -131,24 +112,31 @@ public class MainController {
 			return "articulo_guardado";
 		}
 	
-		@RequestMapping("/articulos/{id}")
-		public String verArticulos (Model model, @PathVariable long id){
-			
-			Articulo articulo1 = service.findOne(id);
-			model.addAttribute("articulo", articulo1);
-
-			return "verArticulo";
-		}	
-		/*
+		
 		@RequestMapping("/articulos/{id}")
 		public String verArticulo (Model model, @PathVariable long id,HttpServletRequest request){
 			
 			Articulo articulo1 = articulo.findOne(id);
 			model.addAttribute("articulo", articulo1);
-			model.addAttribute("user",request.isUserInRole("USER"));
+			model.addAttribute("USER",request.isUserInRole("USER"));
 			
-			return "articulo";
-		}	*/
+			return "verArticulo";
+		}
+		
+		@RequestMapping("/eliminar_articulo")
+		public String eliminarArticulo(){
+			return "eliminarArticulo";
+		}
+
+		@RequestMapping("/articulosEliminar/{id}")
+		public String verArticulos (Model model, @PathVariable long id,HttpServletRequest request){
+			
+			Articulo articulo1 = articulo.findOne(id);
+			model.addAttribute("articulo", articulo1);
+			model.addAttribute("admin",request.isUserInRole("ADMIN"));
+			
+			return "verArticulo";
+		}
 		
 		@RequestMapping("/articulo/{id}/eliminar")
 		public String eliminarArticulo (Model model, @PathVariable long id){
@@ -163,7 +151,7 @@ public class MainController {
 		@GetMapping("/carrito")
 		public String verCarrito (Model model, HttpSession sesion){
 			
-			Cliente cliente1 = cliente.findByEmail((String) sesion.getAttribute("email"));
+			Cliente cliente1 = cliente.findByName((String) sesion.getAttribute("name"));
 			model.addAttribute("articulos_carrito",  cliente1.getCarrito().getArticulosCarrito());
 			return "carrito";
 		}
@@ -171,7 +159,7 @@ public class MainController {
 		@GetMapping("/carrito/{num}")
 		public String verArticuloCarrito (Model model, @PathVariable int num, HttpSession sesion){
 			
-			Cliente cliente1 = cliente.findByEmail((String) sesion.getAttribute("email"));
+			Cliente cliente1 = cliente.findByName((String) sesion.getAttribute("name"));
 			model.addAttribute("articulo_carrito", cliente1.getCarrito().getArticulosCarrito().get(num-1));
 			
 			return "ver_articuloCarrito";
@@ -183,7 +171,7 @@ public class MainController {
 			String resultado = "";
 			Articulo articulo1 = articulo.findOne(id);
 
-			Cliente cliente1 = cliente.findByEmail((String) sesion.getAttribute("email"));
+			Cliente cliente1 = cliente.findByName((String) sesion.getAttribute("name"));
 			Carrito carritoCliente = cliente1.getCarrito();
 			articulo1.getArticulosEnCarrito().add(carritoCliente);
 			int cantidad = articulo1.getCantidad();
@@ -201,7 +189,7 @@ public class MainController {
 		@GetMapping("/carrito/{num}/eliminado")
 		public String eliminarArticuloCarrito (Model model, @PathVariable int num, HttpSession sesion){
 
-			Cliente clienteBuscado = cliente.findByEmail((String) sesion.getAttribute("email"));
+			Cliente clienteBuscado = cliente.findByName((String) sesion.getAttribute("name"));
 			Carrito carrito1 = clienteBuscado.getCarrito();
 			Articulo articulo1 = carrito1.getArticulosCarrito().get(num-1);
 			articulo1.getArticulosEnCarrito().remove(carrito1);
@@ -217,9 +205,9 @@ public class MainController {
 		@PostMapping("/carrito/comprar")
 		public String comprarArticulos(Model model, HttpSession sesion){
 			
-			Cliente cliente1 =  cliente.findByEmail((String) sesion.getAttribute("email"));
+			Cliente cliente1 =  cliente.findByName((String) sesion.getAttribute("name"));
 			Carrito carrito1 = cliente1.getCarrito();
-			model.addAttribute("usuario",cliente1);
+			model.addAttribute("cliente",cliente1);
 			model.addAttribute("articulos_carrito", carrito1.getArticulosCarrito());
 			return "compra";
 		}
@@ -228,7 +216,7 @@ public class MainController {
 		@PostMapping("/compra")
 		public String compra(Model model, HttpSession sesion){
 			
-			Cliente cliente1 =  cliente.findByEmail((String) sesion.getAttribute("email"));
+			Cliente cliente1 =  cliente.findByName((String) sesion.getAttribute("name"));
 			List<Articulo> articulosPedido = articulo.findByArticulosEnCarrito(cliente1.getCarrito());
 			Compra compra1 = new Compra();
 			compra1.setCliente(cliente1);	
@@ -242,22 +230,11 @@ public class MainController {
 				articulo1.getArticulosEnCarrito().remove(carrito1);
 				articulo.save(articulo1);
 			}
-			new UsoEmail().enviar(cliente1.getEmail(), "Confirmacion web", "Gracias por comprar en la web");
+		//	new UsoEmail().enviar(cliente1.getEmail(), "Confirmacion de pedido", "Gracias por comprar en mas que productos informaticos");
 				
 			return "compra_realizada";
 		}
 		
-		/*
-		@PostMapping("/registrar_cliente")
-		public String registrarUsuario(Model model){
-			return "nuevoCliente";
-		}*/
 		
-		/*
-		@PostMapping("/nuevo_articulo")
-		public String añadirArticulo(){
-			return "nuevoArticulo";
-		}*/
-
 
 }

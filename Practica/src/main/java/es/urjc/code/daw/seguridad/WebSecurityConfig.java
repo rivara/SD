@@ -4,60 +4,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+
+@Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
     @Autowired
     public UserRepositoryAuthProvider userRepoAuthProvider;
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-    	
-    	// Public pages
+    
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		//Paginas Publicas
 		http.authorizeRequests().antMatchers("/").permitAll();
-		http.authorizeRequests().antMatchers("/principal").permitAll();
-		http.authorizeRequests().antMatchers("/verArticulo").permitAll();
-		http.authorizeRequests().antMatchers("/login").permitAll();
+		http.authorizeRequests().antMatchers("/loggin").permitAll();
 		http.authorizeRequests().antMatchers("/registrar_cliente").permitAll();
+		http.authorizeRequests().antMatchers("/nuevoCliente").permitAll();
 		http.authorizeRequests().antMatchers("/cliente/nuevo").permitAll();
-        http.authorizeRequests().antMatchers("/logout").permitAll();
-
-        // Private pages (all other pages)
-       // http.authorizeRequests().anyRequest().authenticated();
-        http.authorizeRequests().antMatchers("/articulo/nuevo").hasAnyRole("ADMIN");
-        http.authorizeRequests().antMatchers("/admin").hasAnyRole("ADMIN");
-
-        // Login form
-        http.formLogin().loginPage("/login");
-		http.formLogin().usernameParameter("username");
+		http.authorizeRequests().antMatchers("cliente_registrado").permitAll();
+		
+		//Paginas Privadas
+		http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/nuevoArticulo").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/eliminarArticulo").hasAnyRole("ADMIN");
+		
+		//Loggin
+		http.formLogin().loginPage("/");
+		http.formLogin().usernameParameter("name");
 		http.formLogin().passwordParameter("password");
-		http.formLogin().defaultSuccessUrl("/");
-		http.formLogin().failureUrl("/loginerror");
-
-        // Logout
-        http.logout().logoutUrl("/logout");
-        http.logout().logoutSuccessUrl("/");
-        
-        // Other URLs can be accessed without authentication
-     	http.authorizeRequests().anyRequest().permitAll();
-/*
-     	// Disable CSRF protection (it is difficult to implement with ng2)
-     	http.csrf().disable();
-
-     	// Use Http Basic Authentication
-     	http.httpBasic();
-
-     	// Do not redirect when logout
-     	http.logout().logoutSuccessHandler((rq, rs, a) -> {	});   */
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        // Database authentication provider
-        auth.authenticationProvider(userRepoAuthProvider);
-    }
+		http.formLogin().defaultSuccessUrl("/tienda");
+		http.formLogin().failureUrl("/loggin");
+		
+		//Logout
+		http.logout().logoutUrl("/logout");
+		http.logout().logoutSuccessUrl("/");
+	}
+	
+	//Si queremos poner los administradores
+		@Override
+		 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			
+			auth.authenticationProvider(userRepoAuthProvider);
+		}
 }

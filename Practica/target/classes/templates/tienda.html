@@ -1,20 +1,21 @@
-{{>header}}
+<html>
 <head>
 <meta http-equiv="refresh" content="10">
 </head> 
 <body>
-	<h2>Tienda</h2>
-	<h3>Lista de Articulos<h3>
+	<h2>MAS QUE PRODUCTOS INFORMATICOS</h2>
 
-	{{#articulos}}
-	<a href="articulo/{{id}}">{{nombre}} {{descripcion}} {{precio}}</a><br>
-	{{/articulos}}
-	<br>
-	{{#logged}}
+	{{#admin}}
 	<form action="/nuevo_articulo" method = "post" accept-charset="utf-8">
 		<input type="submit" name="nuevo" value="Nuevo Articulo">
 		<input type="hidden" name="_csrf" value="{{token}}"/>
 	</form>
+	
+	<form action="/eliminar_articulo" method = "post" accept-charset="utf-8">
+		<input type="submit" name="nuevo" value="Eliminar Articulo">
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+	</form>
+	{{/admin}}
 	<form action="/carrito"  accept-charset="utf-8">
 		<input type="submit" name="carrito" value="Ver Carrito">
 	</form>
@@ -22,6 +23,11 @@
 		<input type="submit" value="Sign Out" />
 		<input type="hidden" name="_csrf" value="{{token}}"/>
 	</form>
-	{{/logged}}
+		<h3>Lista de Articulos<h3>
+
+	{{#articulos}}
+	<a href="articulos/{{id}}">{{nombre}} {{descripcion}} {{precio}}</a><br>
+	{{/articulos}}
+	<br>
 </body>
-{{>footer}}
+</html>

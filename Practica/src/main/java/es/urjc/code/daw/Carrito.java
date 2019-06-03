@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-
 public class Carrito implements Serializable {
 	
 	@Id
@@ -27,10 +26,10 @@ public class Carrito implements Serializable {
     //private Articulo articulo;
     //private Compra compra;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="articulosEnCarrito")
 	List<Articulo> articulosCarrito = new ArrayList<Articulo>();
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="carrito")
 	private Cliente cliente;
 	
 	protected Carrito(){

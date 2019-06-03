@@ -1,11 +1,26 @@
 <html>
+<head>
+<meta http-equiv="refresh" content="10">
+</head> 
+<head>
+	<meta charset="utf-8">
+</head>
 <body>
-	<p>Nombre: {{articulo.nombre}}</p>
-	<p>Descripcion: {{articulo.descripcion}}</p>
-	<p>Precio: {{articulo.precio}}</p>
-	<p>Stock: {{articulo.stock.stock_producto}} </p>
+ 	<p>Nombre: {{articulo.nombre}}</p>
+ 	<p>Descripcion: {{articulo.descripcion}}</p>
+ 	<p>Precio: {{articulo.precio}}</p>
 
-	
-	<a href="/">Volver al listado</a>
+ 	<form action="/articulo/{{id}}/añadido" accept-charset="utf-8">
+ 		<input type="submit" name="carrito" value="Añadir al carrito">
+ 	</form>
+ 	
+ 	{{#admin}}
+ 	<form action="/articulo/{{id}}/eliminar" accept-charset="utf-8">
+ 		<input type="submit" name="eliminar" value="Eliminar">
+ 	</form>
+ 	{{/admin}}
+ 	<form action="/tienda" accept-charset="utf-8">
+ 		<input type="submit" name="volver" value="Volver a la tienda">
+ 	</form>
 </body>
 </html>

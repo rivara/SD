@@ -9,9 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 
 
 @Entity
@@ -29,9 +27,8 @@ public class Articulo {
 	
 	// relacion 1 to 1
 	
-	@OneToOne (cascade=CascadeType.ALL)
-	private Stock stock;
-	@ManyToMany(cascade=CascadeType.ALL)
+
+	@ManyToMany(mappedBy="articulosComprados")
 	private List<Compra> articulosEnCompra = new ArrayList<Compra>();
 	
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -40,12 +37,11 @@ public class Articulo {
 	public Articulo () {
 	}
 
-	public Articulo (String nombre, String descripcion, int precio, Stock stock, int cantidad) {
+	public Articulo (String nombre, String descripcion, int precio,  int cantidad) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
-		this.stock = stock;
-		this.cantidad = 0;
+		this.cantidad = cantidad;
 	}
 
 	public long getId() {
@@ -92,7 +88,7 @@ public class Articulo {
 		return articulosEnCompra;
 	}
 
-	public void setArticulosEnPedidos(List<Compra> articulosEnCompra) {
+	public void setArticulosEnCompra(List<Compra> articulosEnCompra) {
 		this.articulosEnCompra = articulosEnCompra;
 	}
 
@@ -106,8 +102,7 @@ public class Articulo {
 
 	@Override
 	public String toString() {
-		return "Articulo [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio + 
-				",+ stock=" + stock +"]";
+		return "Articulo [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio +"]";
 	}
 
 

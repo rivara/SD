@@ -1,8 +1,8 @@
 package es.urjc.code.daw;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,12 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 
 
 @Entity
@@ -31,33 +28,36 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;	
-	private String nombre;
+	private String name;
 	private String primerApellido;
 	private String segundoApellido;
 	@JsonIgnore
-	private String passwordHash;
+	private String password;
 	private String email;
 
-	// relacion 1 to n
+	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
+	private List<Compra> listaCompras = new ArrayList<>();
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Carrito carrito;
 	
-	@OneToMany (cascade = CascadeType.ALL)
-	private List<Compra> listaCompras = new ArrayList<>();
-
+	
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<String> roles;
+	private List<String> rol;
 	  
 	public Cliente (){
 	}
 	
-	public Cliente (String nombre,String primerApellido, String segundoApellido,String email, String password, String... roles) {
-		this.nombre = nombre;
+	public Cliente (String name,String primerApellido, String segundoApellido,String email, String password, String rol) {
+		this.name = name;
 		this.primerApellido = primerApellido;
 		this.segundoApellido = segundoApellido;
-		this.passwordHash = new BCryptPasswordEncoder().encode(password);
+		this.password = new BCryptPasswordEncoder().encode(password);
 		this.email = email;
-		this.roles = new ArrayList<>(Arrays.asList(roles));
+		this.rol = new ArrayList<String>();
+		if(rol!=null){
+			this.rol.add(rol);
+		}
 		this.carrito = new Carrito();
 	}
 	
@@ -70,21 +70,21 @@ public class Cliente {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName () {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 
 	public String getPasswordHash() {
-		return passwordHash;
+		return password;
 	}
 
-	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
+	public void setPasswordHash(String password) {
+		this.password = password;
 	}
 	
 	public String getPrimerApellido() {
@@ -112,11 +112,11 @@ public class Cliente {
 	}
 	
 
-    public List<Compra> getListaCompra() {
+    public List<Compra> getListaCompras() {
         return listaCompras;
     }
     
-    public void setListaCompra(List<Compra> listaCompras) {
+    public void setListaCompras(List<Compra> listaCompras) {
         this.listaCompras = listaCompras;
     } 
     
@@ -128,17 +128,17 @@ public class Cliente {
 		this.carrito = carrito;
 	}
 	
-	public List<String> getRoles() {
-		return roles;
+	public List<String> getRol() {
+		return rol;
 	}
 
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
+	public void setRol(List<String> rol) {
+		this.rol = rol;
 	}
 
 	@Override
 	public String toString() {
-		return "Usuario [nombre=" + nombre + ", primerApellido=" + primerApellido + ", segundoApellido="
+		return "Usuario [name=" + name + ", primerApellido=" + primerApellido + ", segundoApellido="
 				+ segundoApellido + ", email=" + email +  "]";
 	}
 	
