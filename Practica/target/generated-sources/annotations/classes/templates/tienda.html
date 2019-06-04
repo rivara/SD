@@ -1,0 +1,29 @@
+<html>
+<head>
+<meta http-equiv="refresh" content="10">
+</head> 
+<body>
+	<h2>MAS QUE PRODUCTOS INFORMATICOS</h2>
+
+	{{#admin}}
+	<form action="/nuevo_articulo" method = "post" accept-charset="utf-8">
+		<input type="submit" name="nuevo" value="Nuevo Articulo">
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+	</form>
+	{{/admin}}
+	
+	<form action="/carrito"  accept-charset="utf-8">
+		<input type="submit" name="carrito" value="Ver Carrito">
+	</form>
+	<form action="/logout" method="post">
+		<input type="submit" value="Sign Out" />
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+	</form>
+		<h3>Lista de Articulos<h3>
+
+	{{#articulos}}
+	<a href="articulos/{{id}}">{{nombre}} {{descripcion}} {{precio}}</a><br>
+	{{/articulos}}
+	<br>
+</body>
+</html>

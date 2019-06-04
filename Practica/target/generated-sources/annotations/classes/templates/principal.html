@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>MAS QUE PRODUCTOS INFORMATICOS</h1>
+	<form action="/" method="post" accept-charset="utf-8">
+	<p>Username: </p>
+		<input type="text" name="name" placeholder="Username" size="30"><br>
+		<p>Contraseña:<p/>
+		<input type="password" type="text" name="password" size="30" placeholder="Contraseña"><br>
+		<br>
+		<input type="submit" name="guardar" value="ENTRAR"> 
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+	</form><br>
+	<form action="/registrar_cliente" method ="post" accept-charset="utf-8">
+		<input type="submit" name="registrarse" value="REGISTRO">
+		<input type="hidden" name="_csrf" value="{{token}}"/>
+	</form>
+</body>
+</html>

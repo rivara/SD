@@ -1,0 +1,21 @@
+<html>
+<head>
+<meta http-equiv="refresh" content="10">
+</head> 
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+ 	<p>Nombre: {{articulo.nombre}}</p>
+ 	<p>Descripcion: {{articulo.descripcion}}</p>
+ 	<p>Precio: {{articulo.precio}}</p>
+
+ 	<form action="/articulo/{{id}}/añadido" accept-charset="utf-8">
+ 		<input type="submit" name="carrito" value="Añadir al carrito">
+ 	</form>
+
+ 	<form action="/tienda" accept-charset="utf-8">
+ 		<input type="submit" name="volver" value="Volver a la tienda">
+ 	</form>
+</body>
+</html>
