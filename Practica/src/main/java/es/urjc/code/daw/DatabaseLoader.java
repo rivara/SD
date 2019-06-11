@@ -22,8 +22,8 @@ public class DatabaseLoader {
 		articulo.save(new Articulo ("GRAFICA"," 8G 8GB GDDR5",12,1));
 		articulo.save(new Articulo ("INALAMBRICO","bat Litio",200,0));*/
 
-/*
-		clientes.save(new Cliente("Dani","Dani1","Dani2","Dani@gmail.com","1234","ROLE_USER"));
+
+		/*clientes.save(new Cliente("Dani","Dani1","Dani2","Dani@gmail.com","1234","ROLE_USER"));
 		clientes.save(new Cliente("Admin","Admin1","Admin2","admin@gmail","admin","ROLE_ADMIN"));*/
 	}
 }

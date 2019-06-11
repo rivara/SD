@@ -1,18 +1,18 @@
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\seguridad\ArticuloService.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\ClienteRepository.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\email\EmailService.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\seguridad\UserRepositoryAuthProvider.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\email\Email.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\ArticuloRepository.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\CompraRepository.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\Application.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\seguridad\CSRFHandlerConfiguration.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\Articulo.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\Cliente.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\CarritoRepository.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\Compra.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\seguridad\WebSecurityConfig.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\MainController.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\DatabaseLoader.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\seguridad\CSRFHandlerInterceptor.java
-C:\Users\Ricardo Valle Ramire\git\SD2019\Practica\src\main\java\es\urjc\code\daw\Carrito.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/ClienteRepository.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/CompraRepository.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/seguridad/WebSecurityConfig.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/email/Email.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/seguridad/CSRFHandlerConfiguration.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/seguridad/CSRFHandlerInterceptor.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/Compra.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/Application.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/seguridad/ArticuloService.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/seguridad/UserRepositoryAuthProvider.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/Articulo.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/CarritoRepository.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/DatabaseLoader.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/email/EmailService.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/Cliente.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/Carrito.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/ArticuloRepository.java
+/home/ubuntu/URJC/SD/Practica/src/main/java/es/urjc/code/daw/MainController.java
